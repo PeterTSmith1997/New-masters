@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="JarFiles/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="JarFiles/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="JarFiles/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="JarFiles/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="JarFiles/geoip2-2.12.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="JarFiles/geoip2-2.12.0-sources.jar"/>
+	<classpathentry kind="lib" path="JarFiles/geoip2-2.12.0.jar"/>
+	<classpathentry kind="lib" path="JarFiles/hsqldb.jar"/>
+	<classpathentry kind="lib" path="JarFiles/httpclient-4.5.5.jar"/>
+	<classpathentry kind="lib" path="JarFiles/httpcore-4.4.9.jar"/>
+	<classpathentry kind="lib" path="JarFiles/jackcess-2.1.6.jar"/>
+	<classpathentry kind="lib" path="JarFiles/jackson-annotations-2.9.5.jar"/>
+	<classpathentry kind="lib" path="JarFiles/jackson-core-2.9.5.jar"/>
+	<classpathentry kind="lib" path="JarFiles/jackson-databind-2.9.5.jar"/>
+	<classpathentry kind="lib" path="JarFiles/maxmind-db-1.2.2.jar"/>
+	<classpathentry kind="lib" path="JarFiles/ucanaccess-4.0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

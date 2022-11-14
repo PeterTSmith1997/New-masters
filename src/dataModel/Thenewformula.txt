@@ -1,0 +1,64 @@
+	public double risk(String ip, DataStore dataStore, String countryCode) {
+		double risk = 0;
+		Database database = new Database();
+		if (!database.knownBots(ip).equals("n/a")) {
+			return 0;
+		}
+		double orrcancesOfipLog = Math
+				.log(dataStore.getOrrcancesOfip().get(ip));
+		orrcancesOfipLog = orrcancesOfipLog==0.00 ? 00.1 : orrcancesOfipLog;
+		double countryRisk = database.countryRisk(countryCode); 
+		double responseRisk = 0;
+		double requestRisk = 0;
+		int found = 0;
+		for (Hits h : dataStore.getHits()) {
+			if (h.getiPaddr().equals(ip)) {
+				found++;
+				switch (h.getResponse()) {
+				case 400:
+					responseRisk += 0.5;
+					break;
+				case 401:
+					responseRisk += 5;
+					break;
+				case 403:
+					responseRisk += 2;
+					break;
+				case 404:
+					responseRisk += 1;
+					break
+				case 429:
+					responseRisk += +2;
+					break;
+				case 500:
+					responseRisk += 0.2;
+					break;
+				case 200:
+					responseRisk -= 1;
+					break;
+				}
+				if (containIgnoreCase(h.getRequest(), "wp-admin")) {
+					requestRisk += 3;
+				}
+				if (containIgnoreCase(h.getRequest(), "login")) {
+					requestRisk += 2;
+				}
+				if (h.getSize() == 0) {
+					responseRisk = +6;
+				}
+			}
+			if (found==orrcancesOfip) {
+					System.out.println("found all");
+					break;
+			}
+
+		}
+		risk = (orrcancesOfipLog * 0.6) + ((requestRisk+responseRisk)*0.3) + (countryRisk * 0.1);
+		if (risk > 100) {
+			return 100;
+		} else if (risk < 1) {
+			return 1;
+		} else {
+			return risk;
+		}
+	}

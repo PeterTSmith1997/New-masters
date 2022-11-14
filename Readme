@@ -1,0 +1,1 @@
+All classes get passed the DataStore object. This class contains all the information needed to run the software. For example, all the data from the log files.
