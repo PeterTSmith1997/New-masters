@@ -18,6 +18,7 @@ public class Risk {
 	private double userAgegentRisk;
 	private Database database;
 	private double risk;
+	private double asnrisk;
 
 	/**
 	 * Small method to aid in the analysis of URL's by changing all the inputs to
@@ -52,15 +53,11 @@ public class Risk {
 		requestRisk = 0;
 		userAgegentRisk = 0;
 		mainLoop(ip, dataStore, botAnalsis);
-		Double asnrisk = asn(ip, database);
+		asn(ip, database);
 		Double requestResponseRisk = Math.log(requestRisk + responseRisk);
 		if (Double.isNaN(requestResponseRisk)) {
 			requestResponseRisk = 0.01;
 		}
-		Modifiers modifiers = new Modifiers();
-
-		double networkRisk = (countryRisk * modifiers.getContrry()) + (asnrisk * modifiers.getAsn())
-				+ (userAgegentRisk * modifiers.getUseragegent());
 
 		risk = calulateRisk(orrcancesOfipLog, requestResponseRisk, modifiers, networkRisk);
 
@@ -127,17 +124,15 @@ public class Risk {
 		}
 	}
 
-	private Double asn(String ip, Database database) {
+	private void asn(String ip, Database database) {
 		IPFunctions ipFunctions = new IPFunctions();
 		Integer asn;
-		Double asnrisk;
 		if (!(ipFunctions.getASN(ip) == null)) {
 			asn = ipFunctions.getASN(ip);
 			asnrisk = database.getASNRisk(asn);
 		} else {
 			asnrisk = 0.0;
 		}
-		return asnrisk;
 	}
 
 	private double normalise(String ip, DataStore dataStore, double risk, Database database) {
@@ -156,9 +151,14 @@ public class Risk {
 
 	private double calulateRisk(double orrcancesOfipLog, Double requestResponseRisk, Modifiers modifiers,
 			double networkRisk) {
-		double risk;
-		risk = (orrcancesOfipLog * modifiers.getOrrcances()) + (requestResponseRisk * modifiers.getRequestRespose())
-				+ (networkRisk * modifiers.getNetwork());
+		double risk =
+			       (orrcancesOfipLog * Modifiers.ORRCANCES ) 
+			       +   (requestResponseRisk * Modifiers.REQUESTRESPOSE) 
+			       +   (countryRisk * Modifiers. CONTRRY ) 
+			       +   (asnrisk * Modifiers. ASN  ) 
+			       +   (userAgegentRisk * Modifiers.USERAGEGENT);
+			             
+
 		return risk;
 	}
 
