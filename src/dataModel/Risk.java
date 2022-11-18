@@ -163,7 +163,7 @@ public class Risk {
 	}
 
 	private double calulateOccances(String ip, DataStore dataStore) {
-		double orrcancesOfipLog = Math.log10(dataStore.getOrrcancesOfip().get(ip));
+		double orrcancesOfipLog = Math.log(dataStore.getOrrcancesOfip().get(ip));
 		orrcancesOfipLog = orrcancesOfipLog == 0.00 ? 00.1 : orrcancesOfipLog;
 		return orrcancesOfipLog;
 	}

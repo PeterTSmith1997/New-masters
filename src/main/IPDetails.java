@@ -137,7 +137,7 @@ public class IPDetails extends JFrame {
 		panelRiskBar.setMaximumSize(new Dimension(100, 32767));
 		getContentPane().add(panelRiskBar, BorderLayout.SOUTH);
 		panelRiskBar.setLayout(new BorderLayout(0, 0));
-		double riskRaw = analise.risk(ip, dataStore, countryCode);
+		double riskRaw = dataStore.getRisks().get(ip);
 		
 		int risk = dataStore.getRisks().get(ip);
 		lblRiskFactor = new JLabel("Risk Factor: " + risk);
