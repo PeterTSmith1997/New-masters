@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -657,19 +659,19 @@ public class Database {
 		return null;
 	}
 	
-	public ArrayList<String> knownAU() {
-		ArrayList<String> goodSigns = new ArrayList<>();
+	public Set<String> knownAU() { 
+		Set<String> goodSigns = new HashSet<>();
 		try {
 		PreparedStatement stmt = conn.prepareStatement("select UA from UARisk");
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
-			goodSigns.add(rs.getString("UA"));
-			System.out.println(goodSigns);
+		goodSigns.add(rs.getString("UA"));
+		System.out.println(goodSigns);
 		}
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		// TODO: handle exception
+		e.printStackTrace();
 		}
 		return goodSigns;
-	}
+		}
 }
