@@ -117,8 +117,8 @@ public class Database {
 
 	public double getRiskIP(String ip) {
 		Modifiers modifiers = new Modifiers();
-		return (getRisk30Days(ip) * modifiers.getRecent()) + 
-				(getRiskAlltime(ip) * modifiers.getAllTimedb());
+		return (getRisk30Days(ip) * Modifiers.RECENT) + 
+				(getRiskAlltime(ip) * Modifiers.ALLTIMEDB);
 	}
 
 	public void updateRiskIP(String ip, DataStore dataStore, double risk) {

@@ -19,6 +19,7 @@ public class Risk {
 	private Database database;
 	private double risk;
 	private double asnrisk;
+	private double requestResponseRisk;
 
 	/**
 	 * Small method to aid in the analysis of URL's by changing all the inputs to
@@ -54,12 +55,12 @@ public class Risk {
 		userAgegentRisk = 0;
 		mainLoop(ip, dataStore, botAnalsis);
 		asn(ip, database);
-		Double requestResponseRisk = Math.log(requestRisk + responseRisk);
+		requestResponseRisk = Math.log(requestRisk + responseRisk);
 		if (Double.isNaN(requestResponseRisk)) {
 			requestResponseRisk = 0.01;
 		}
 
-		risk = calulateRisk(orrcancesOfipLog, requestResponseRisk, modifiers, networkRisk);
+		risk = calulateRisk();
 
 		logToFile(ip, temp, risk, orrcancesOfipLog, countryRisk, responseRisk, requestRisk, requestResponseRisk,
 				userAgegentRisk);
@@ -149,8 +150,7 @@ public class Risk {
 		}
 	}
 
-	private double calulateRisk(double orrcancesOfipLog, Double requestResponseRisk, Modifiers modifiers,
-			double networkRisk) {
+	private double calulateRisk() {
 		double risk =
 			       (orrcancesOfipLog * Modifiers.ORRCANCES ) 
 			       +   (requestResponseRisk * Modifiers.REQUESTRESPOSE) 
@@ -190,10 +190,9 @@ public class Risk {
 			return -1;
 		}
 		Database database = new Database();
-		Modifiers modifiers = new Modifiers();
 
-		int totalRisk = (int) ((risk(ip, dataStore, countryCode) * modifiers.getIp())
-				+ (database.getRiskIP(ip) * modifiers.getDb()));
+		int totalRisk = (int) ((risk(ip, dataStore, countryCode) * Modifiers.IP)
+				+ (database.getRiskIP(ip) * Modifiers.DB));
 		if (totalRisk > 100) {
 			return 100;
 		} else {
