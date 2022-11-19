@@ -20,6 +20,7 @@ public class Risk {
 	private double risk;
 	private double asnrisk;
 	private double requestResponseRisk;
+	private double orrcancesOfipRisk;
 
 	/**
 	 * Small method to aid in the analysis of URL's by changing all the inputs to
@@ -48,7 +49,7 @@ public class Risk {
 		}
 		BotAnalsis botAnalsis = new BotAnalsis();
 
-		orrcancesOfipLog = calulateOccances(ip, dataStore);
+		calulateOccancesSig(ip, dataStore);
 		countryRisk = database.countryRisk(countryCode);
 		responseRisk = 0;
 		requestRisk = 0;
@@ -62,7 +63,7 @@ public class Risk {
 
 		risk = calulateRisk();
 
-		logToFile(ip, temp, risk, orrcancesOfipLog, countryRisk, responseRisk, requestRisk, requestResponseRisk,
+		logToFile(ip, temp, risk, orrcancesOfipRisk, countryRisk, responseRisk, requestRisk, requestResponseRisk,
 				userAgegentRisk);
 
 		return normalise(ip, dataStore, risk, database);
@@ -152,7 +153,7 @@ public class Risk {
 
 	private double calulateRisk() {
 		double risk =
-			       (orrcancesOfipLog * Modifiers.ORRCANCES ) 
+			       (orrcancesOfipRisk * Modifiers.ORRCANCES ) 
 			       +   (requestResponseRisk * Modifiers.REQUESTRESPOSE) 
 			       +   (countryRisk * Modifiers. CONTRRY ) 
 			       +   (asnrisk * Modifiers. ASN  ) 
@@ -162,10 +163,13 @@ public class Risk {
 		return risk;
 	}
 
-	private double calulateOccances(String ip, DataStore dataStore) {
-		double orrcancesOfipLog = Math.log(dataStore.getOrrcancesOfip().get(ip));
-		orrcancesOfipLog = orrcancesOfipLog == 0.00 ? 00.1 : orrcancesOfipLog;
-		return orrcancesOfipLog;
+	private void calulateOccancesSig(String ip, DataStore dataStore) {
+		//orrcancesOfipRisk = Math.log(dataStore.getOrrcancesOfip().get(ip));
+		//orrcancesOfipRisk = orrcancesOfipRisk == 0.00 ? 00.1 : orrcancesOfipRisk;
+		//return orrcancesOfipRisk;
+		double x = dataStore.getOrrcancesOfip().get(ip) ; 
+		orrcancesOfipRisk =  ( ( 10.0 / ( 5.0 + Math.pow(Math.E ,-0.1 * x))));
+
 	}
 
 	private void logToFile(String ip, File temp, double risk, double orrcancesOfipLog, double countryRisk,
