@@ -55,7 +55,7 @@ public class Database {
 		String botName = "n/a";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(
-					"SELECT BotName FROM Bots  Where IP=? and Cat=1");
+					"SELECT BotName FROM Bots  Where IP=?");
 			stmt.setString(1, ip);
 			ResultSet rs = stmt.executeQuery();
 			Boolean moreRecords = rs.next();
